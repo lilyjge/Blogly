@@ -1,0 +1,21 @@
+<% layout('boilerplate') -%>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h1 class="mb-3">New Post</h1>
+            <form action="/posts" method="post">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" class="form-control" id="title" name="title">
+                  </div>
+                  <div class="mb-3">
+                    <label for="content" class="form-label">Content</label>
+                    <textarea class="form-control" id="content" name="content" rows="10"></textarea>
+                  </div>
+                <button class="btn btn-success mt-3">Submit</button>
+            </form>
+            <br>
+            <a href="/posts">Back to All</a>
+        </div>
+    </div>
+</div>
