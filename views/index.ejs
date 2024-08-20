@@ -2,6 +2,7 @@
 <style>
     .card-text{
     display: -webkit-box;
+    line-clamp: 5;
     -webkit-line-clamp: 5;
     -webkit-box-orient: vertical;
     overflow: hidden;
@@ -16,7 +17,7 @@
                     <div class="card-body">
                         <h5 class="card-title"><%= p.title %></h5>
                         <!-- <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6> -->
-                        <p class="card-text"><%- p.content %></p>
+                        <p class="card-text"><%- p.spaced %></p>
                         <a href="/posts/<%= p._id %>" class="card-link">Read More</a>
                     </div>
                 </div>

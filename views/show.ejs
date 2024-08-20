@@ -1,4 +1,5 @@
 <% layout('boilerplate') -%>
+</style>
 <div class="container">
     <div class="row">
         <div class="col-md-8 offset-md-2">
@@ -6,7 +7,7 @@
                 <div class="card-body">
                     <h4 class="card-title"><%= post.title %></h5>
                     <!-- <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6> -->
-                    <p class="card-text"><%- post.content %></p>
+                    <p class="card-text"><%- post.spaced %></p>
                     <!-- <a href="/posts">Back to All</a> -->
                     <a href="/posts/<%= post._id %>/edit" class="btn btn-info">Edit</a>
                     <form class="d-inline" action="/posts/<%= post._id %>?_method=delete" method="post">

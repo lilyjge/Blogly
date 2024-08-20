@@ -29,7 +29,7 @@ app.get("/", (req, res) => {
 app.post("/posts", async (req, res) => {
     const {title, content} = req.body;
     const spaced = nl2br(content);
-    const post = new Post({title, content: spaced});
+    const post = new Post({title, content, spaced});
     await post.save();
     res.redirect("/posts");
 });
@@ -53,7 +53,7 @@ app.put("/posts/:id", async (req, res) => {
     const {id} = req.params;
     const {title, content} = req.body;
     const spaced = nl2br(content);
-    const post = await Post.findByIdAndUpdate(id, {title, content: spaced});
+    const post = await Post.findByIdAndUpdate(id, {title, content, spaced});
     res.redirect(`/posts/${post._id}`);
 });
 
