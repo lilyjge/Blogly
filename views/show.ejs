@@ -1,5 +1,79 @@
 <% layout('boilerplate') -%>
+<style>
+.button-like {
+  border: 2px solid #8a8a8a;
+  background-color: transparent;
+  text-decoration: none;
+  padding: 0.5rem;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+  position: relative;
+  vertical-align: middle;
+  text-align: center;
+  display: inline-block;
+  border-radius: 3rem;
+  color: #8a8a8a;
+  transition: all ease 0.4s;
+}
+
+.button-like span {
+  margin-left: 0.3rem;
+}
+
+.button-like .fa-heart,
+.button-like span {
+  transition: all ease 0.4s;
+}
+
+.button-like:focus {
+  background-color: transparent;
+}
+
+.button-like:focus .fa-heart,
+.button-like:focus span {
+  color: #8a8a8a;
+}
+
+.button-like:hover {
+  border-color: #f3969a;
+  background-color: transparent;
+}
+
+.button-like:hover .fa-heart,
+.button-like:hover span {
+  color: #f3969a;
+}
+
+.liked {
+  background-color: #f3969a;
+  border-color: #f3969a;
+}
+
+.liked .fa-heart,
+.liked span {
+  color: #fefefe;
+}
+
+.liked:focus {
+  background-color: #f3969a;
+}
+
+.liked:focus .fa-heart,
+.liked:focus span {
+  color: #fefefe;
+}
+
+.liked:hover {
+  background-color: #f3969a;
+  border-color: #f3969a;
+}
+
+.liked:hover .fa-heart,
+.liked:hover span {
+  color: #fefefe;
+}
 </style>
+
 <div class="container">
     <div class="row">
         <div class="col-md-8 offset-md-2">
@@ -9,12 +83,43 @@
                     <!-- <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6> -->
                     <p class="card-text"><%- post.spaced %></p>
                     <!-- <a href="/posts">Back to All</a> -->
-                    <a href="/posts/<%= post._id %>/edit" class="btn btn-info">Edit</a>
-                    <form class="d-inline" action="/posts/<%= post._id %>?_method=delete" method="post">
-                        <button class="btn btn-secondary">Delete</button>
-                    </form>
+                </div>
+            </div>
+            <div class="mt-3">
+                <a href="/posts/<%= post._id %>/edit" class="btn btn-info">Edit</a>
+                <form class="d-inline" action="/posts/<%= post._id %>?_method=delete" method="post">
+                    <button class="btn btn-danger">Delete</button>
+                </form>
+                <div class="float-end">
+                    <!-- <form action="/posts//like" method="post"> -->
+                    <button class="button button-like" data-post-id="<%= post._id %>">
+                        <i class="fa-solid fa-heart fa-lg"></i>
+                        <span id="likes-count-<%= post._id %>"><%= post.likes %></span>
+                    </button>
+                    <!-- </form> -->
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+    let btn = document.querySelector(".button-like");
+    btn.addEventListener("click", async function() {
+        event.preventDefault();  
+        this.classList.toggle("liked");
+        // console.log("clicked");
+        var postId = event.target.dataset.postId;
+        // console.log(this);
+        var liked = this.classList.contains("liked");
+        // console.log(liked);
+        if(liked) document.querySelector('#likes-count-' + postId).textContent++;
+        else document.querySelector('#likes-count-' + postId).textContent--;
+        await fetch('/posts/' + postId + '/act', {method: "post", body: JSON.stringify({ liked: liked}), headers: {
+    "Content-Type": "application/json",
+  }});
+    });
+
+    // var actOnPost = async function (event) {
+      
+    // };
+</script>

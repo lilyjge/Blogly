@@ -11,6 +11,7 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 app.use(express.urlencoded({extended: true}));
+app.use(express.json());
 app.use(methodOverride("_method"));
 
 const mongoose = require('mongoose');
@@ -61,6 +62,19 @@ app.delete("/posts/:id", async(req, res) => {
     const {id} = req.params;
     await Post.findByIdAndDelete(id);
     res.redirect("/posts");
+});
+
+app.post('/posts/:id/act', async (req, res) =>{
+    const {id} = req.params;
+    const liked = req.body.liked;
+    // console.log(req.body);
+    var counter; 
+    if(liked) counter = 1;
+    else counter = -1;
+    const post = await Post.findById(id);
+    await Post.findByIdAndUpdate(id, {likes: post.likes + counter});
+    // console.log("here");
+    res.send('');
 });
 
 app.get("/posts/:id/edit", async (req, res) => {
